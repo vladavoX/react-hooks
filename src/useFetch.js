@@ -8,7 +8,9 @@ export const useFetch = (url) => {
     const fetchFunc = async () => {
       const x = await fetch(url)
       const y = await x.text()
-      setState({ data: y, loading: false })
+      setTimeout(() => {
+        setState({ data: y, loading: false })
+      }, 2000)
     }
 
     fetchFunc()
