@@ -1,25 +1,10 @@
-import { useRef, useState, useEffect } from 'react'
+import React from 'react'
+import { useCountRenders } from './useCountRenders'
 
-import { useFetch } from './useFetch'
+const Hello = React.memo(({ increment }) => {
+	// useCountRenders()
 
-export const Hello = () => {
-  // const renders = useRef(0)
-  const [count, setCount] = useState(() =>
-    JSON.parse(localStorage.getItem('count'))
-  )
-  const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`)
+	return <button onClick={() => increment(5)}>hello</button>
+})
 
-  useEffect(() => {
-    localStorage.setItem('count', JSON.stringify(count))
-  }, [count])
-
-  // console.log('hello renders', renders.current++)
-
-  return (
-    <div>
-      <div>{!data ? 'loading...' : <p>{data}</p>}</div>
-      <div>count: {count}</div>
-      <button onClick={() => setCount((prev) => prev + 1)}>+</button>
-    </div>
-  )
-}
+export default Hello
