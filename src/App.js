@@ -1,29 +1,33 @@
-import { useCallback, useEffect, useState } from 'react'
-import Hello from './Hello'
-import Square from './Square'
+import { useMemo, useState } from 'react'
+
+import { useFetch } from './useFetch'
+
+const computeLongestWord = arr => {
+	if (!arr) return []
+
+	console.log('computing longest word')
+
+	let longestWord = ''
+	arr.forEach(sentence =>
+		sentence.body.split(' ').forEach(word => {
+			if (word.length > longestWord.length) longestWord = word
+		})
+	)
+
+	return longestWord
+}
 
 const App = () => {
 	const [count, setCount] = useState(0)
-	const favoriteNums = [5, 45, 65]
+	const { data } = useFetch('https://jsonplaceholder.typicode.com/comments')
 
-	const increment = useCallback(
-		n => {
-			setCount(c => c + n)
-		},
-		[setCount]
-	)
+	const longestWord = useMemo(() => computeLongestWord(data), [data])
 
 	return (
 		<div>
-			<Hello increment={increment} />
 			<div>count: {count}</div>
-			{favoriteNums.map(n => (
-				<Square
-					increment={increment}
-					key={n}
-					n={n}
-				/>
-			))}
+			<button onClick={() => setCount(c => c + 1)}>increment</button>
+			<div>{longestWord}</div>
 		</div>
 	)
 }

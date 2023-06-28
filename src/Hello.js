@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCountRenders } from './useCountRenders'
+// import { useCountRenders } from './useCountRenders'
 
 const Hello = React.memo(({ increment }) => {
 	// useCountRenders()
